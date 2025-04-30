@@ -287,12 +287,8 @@
                     @<%= post.user.username %>
                   </h3>
                   <p class="text-xs text-gray-500">
-                    <%= new Date(post.date).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric'
-                    }) %>
-                    
+                    <%= new Date(post.date).toLocaleDateString('en-US', { month:
+                    'short', day: 'numeric', year: 'numeric' }) %>
                   </p>
                 </div>
               </div>
@@ -319,7 +315,8 @@
               <div class="relative">
                 <pre
                   class="text-gray-300 text-sm whitespace-pre-wrap font-sans leading-relaxed pr-2"
-                ><%= post.content.trim() %>
+                >
+<%= post.content.trim() %>
                 </pre>
                 <!-- Scroll indicator -->
                 <div
@@ -394,6 +391,7 @@
           })
           .finally(() => {
             setTimeout(() => btn.classList.remove("liked"), 500);
+            location.reload();
           });
       }
       document.querySelectorAll(".post-content").forEach((el) => {
