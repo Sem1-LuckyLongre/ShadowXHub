@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title><%= user.name %>'s Profile | ShadowXHub</title>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                500: "#6366f1",
+                600: "#4f46e5",
+              },
+              dark: {
+                600: "#334155",
+                700: "#1e293b",
+                800: "#1e293b",
+                900: "#0f172a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .input-field:focus-within {
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+      }
+
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+
+      .post-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .post-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      }
+
+      .post-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .post-content {
+        scrollbar-width: thin;
+        scrollbar-color: #334155 #1e293b;
+      }
+
+      .post-content::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .post-content::-webkit-scrollbar-track {
+        background: #1e293b;
+      }
+
+      .post-content::-webkit-scrollbar-thumb {
+        background-color: #334155;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body class="bg-dark-900 text-gray-100 min-h-screen">
+    <!-- Header Section -->
+    <header
+      class="w-full bg-dark-800 p-3 sm:p-4 shadow-md border-b border-dark-700"
+    >
+      <div
+        class="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0"
+      >
+        <div class="flex items-center space-x-2 sm:space-x-4">
+          <div
+            class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-primary-500 to-blue-400 flex items-center justify-center"
+          >
+            <span class="font-bold text-white text-sm sm:text-base">
+              <%= user.name.charAt(0).toUpperCase() %>
+            </span>
+          </div>
+          <h1
+            class="text-lg sm:text-xl font-bold bg-gradient-to-r from-primary-500 to-blue-400 bg-clip-text text-transparent"
+          >
+            <%= user.name %>
+          </h1>
+        </div>
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <a
+            href="/all-posts"
+            class="text-blue-400 hover:text-blue-300 font-medium flex items-center text-sm sm:text-base"
+          >
+            <i class="fas fa-globe mr-1 sm:mr-2"></i>
+            <span class="hidden sm:inline">Global</span> Posts
+          </a>
+          <a
+            href="/logout"
+            class="text-red-400 hover:text-red-300 font-medium flex items-center text-sm sm:text-base"
+          >
+            <i class="fas fa-sign-out-alt mr-1 sm:mr-2"></i>
+            <span class="hidden sm:inline">Logout</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main
+      class="container mx-auto py-4 sm:py-8 px-3 sm:px-4 flex flex-col md:flex-row gap-4 sm:gap-8"
+    >
+      <!-- Profile Sidebar -->
+      <aside class="w-full md:w-1/3 lg:w-1/4">
+        <div
+          class="bg-dark-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg border border-dark-700"
+        >
+          <div class="flex flex-col items-center">
+            <div
+              class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-primary-500 to-blue-400 flex items-center justify-center mb-3 sm:mb-4 text-2xl sm:text-3xl md:text-4xl font-bold"
+            >
+              <%= user.name.charAt(0).toUpperCase() %>
+            </div>
+            <h2 class="text-lg sm:text-xl font-bold"><%= user.name %></h2>
+            <p class="text-gray-400 text-sm sm:text-base">
+              @<%= user.username %>
+            </p>
+          </div>
+
+          <div class="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
+            <div class="flex items-center">
+              <i
+                class="fas fa-envelope text-primary-500 w-5 sm:w-6 text-sm sm:text-base"
+              ></i>
+              <span class="ml-2 text-gray-300 text-sm sm:text-base">
+                <%= user.email %>
+              </span>
+            </div>
+            <div class="flex items-center">
+              <i
+                class="fas fa-birthday-cake text-primary-500 w-5 sm:w-6 text-sm sm:text-base"
+              ></i>
+              <span class="ml-2 text-gray-300 text-sm sm:text-base">
+                <%= user.age %> years old
+              </span>
+            </div>
+            <div class="flex items-center">
+              <i
+                class="fas fa-pen text-primary-500 w-5 sm:w-6 text-sm sm:text-base"
+              ></i>
+              <span class="ml-2 text-gray-300 text-sm sm:text-base">
+                <%= user.posts.length %> posts
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-dark-700">
+            <h3 class="font-medium text-sm sm:text-base mb-2">
+              Account Settings
+            </h3>
+            <a
+              href="/edit-profile"
+              class="flex items-center text-gray-300 hover:text-primary-400 transition-colors text-sm sm:text-base"
+            >
+              <i class="fas fa-user-edit mr-2"></i> Edit Profile
+            </a>
+            <a
+              href="/change-password"
+              class="flex items-center text-gray-300 hover:text-primary-400 transition-colors mt-1 sm:mt-2 text-sm sm:text-base"
+            >
+              <i class="fas fa-lock mr-2"></i> Change Password
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <div class="w-full md:w-2/3 lg:w-3/4 space-y-4 sm:space-y-6">
+        <!-- Create Post Section -->
+        <section
+          class="bg-dark-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg border border-dark-700"
+        >
+          <h2
+            class="text-lg sm:text-xl font-bold mb-3 sm:mb-4 flex items-center"
+          >
+            <i class="fas fa-edit text-primary-500 mr-2"></i> Create Post
+          </h2>
+          <form
+            action="/create-post"
+            method="POST"
+            class="space-y-3 sm:space-y-4"
+            id="postForm"
+            onsubmit="return validatePost()"
+          >
+            <div
+              class="input-field bg-dark-700 rounded-lg border border-dark-600 focus-within:border-primary-500 transition-all"
+            >
+              <textarea
+                name="content"
+                id="content"
+                rows="3"
+                class="w-full px-3 sm:px-4 py-2 sm:py-3 bg-transparent focus:outline-none text-gray-100 placeholder-gray-500 text-sm sm:text-base"
+                placeholder="What's on your mind, <%= user.name.split(' ')[0] %>?"
+                required
+                maxlength="500"
+                oninput="updateCharCount()"
+              ></textarea>
+            </div>
+            <div class="flex justify-between items-center">
+              <button
+                type="submit"
+                class="bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-medium py-1 sm:py-2 px-4 sm:px-6 rounded-lg transition-all duration-300 flex items-center text-sm sm:text-base"
+              >
+                <i class="fas fa-paper-plane mr-1 sm:mr-2"></i> Post
+              </button>
+              <div class="flex items-center">
+                <span id="charCount" class="text-xs text-gray-500 mr-2"
+                  >0/500</span
+                >
+                <span class="text-xs text-gray-500">Max 500 characters</span>
+              </div>
+            </div>
+            <div id="postError" class="text-red-400 text-sm hidden"></div>
+          </form>
+        </section>
+
+        <!-- Posts Section -->
+        <section
+          class="bg-dark-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg border border-dark-700"
+        >
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold flex items-center">
+              <i class="fas fa-newspaper text-primary-500 mr-3"></i>
+              <span
+                class="bg-gradient-to-r from-primary-500 to-blue-400 bg-clip-text text-transparent"
+              >
+                Your Posts
+              </span>
+            </h2>
+            <div class="flex items-center space-x-4">
+              <a
+                href="/all-posts"
+                class="flex items-center text-sm text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                <i class="fas fa-globe mr-2"></i>
+                View All Posts
+              </a>
+            </div>
+          </div>
+
+          <% if (user.posts.length===0) { %>
+          <div class="text-center py-12">
+            <div class="inline-block p-6 bg-dark-700 rounded-full mb-4">
+              <i class="fas fa-comments text-4xl text-gray-500"></i>
+            </div>
+            <h3 class="text-lg font-medium text-gray-300 mb-2">No Posts Yet</h3>
+            <p class="text-gray-500 max-w-md mx-auto">
+              You haven't shared anything yet. Create your first post above!
+            </p>
+          </div>
+          <% } else { %>
+          <!-- Grid Layout -->
+          <div class="post-grid">
+            <% user.posts.reverse().forEach((post)=> { %>
+            <div
+              class="post-card bg-dark-700 rounded-lg border border-dark-600 hover:border-primary-500 transition-all overflow-hidden"
+            >
+              <!-- Post Header -->
+              <div
+                class="p-4 border-b border-dark-600 flex items-center justify-between"
+              >
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="w-8 h-8 rounded-full bg-gradient-to-r from-primary-500 to-blue-400 flex items-center justify-center"
+                  >
+                    <span class="font-bold text-white text-sm">
+                      <%= user.username.charAt(0).toUpperCase() %>
+                    </span>
+                  </div>
+                  <div>
+                    <h3
+                      class="post-author text-sm font-medium text-primary-400 cursor-pointer"
+                    >
+                      @<%= user.username %>
+                    </h3>
+                    <p class="text-xs text-gray-500">
+                      <%= new Date(post.date).toLocaleDateString('en-US', {
+                      month: 'short', day: 'numeric', year: 'numeric' }) %>
+                    </p>
+                  </div>
+                </div>
+                <div class="flex space-x-2">
+                  <a
+                    href="/edit/<%= post._id %>"
+                    class="text-gray-500 hover:text-yellow-400 transition-colors"
+                  >
+                    <i class="fas fa-pencil-alt text-xs"></i>
+                  </a>
+                  <a
+                    href="/delete/<%= post._id %>"
+                    class="text-gray-500 hover:text-red-400 transition-colors"
+                  >
+                    <i class="fas fa-trash-alt text-xs"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Post Content -->
+              <div class="post-content p-4 max-h-40 overflow-y-auto">
+                <div class="relative">
+                  <pre
+                    class="text-gray-300 text-sm whitespace-pre-wrap font-sans leading-relaxed pr-2"
+                  >
+<%= post.content.trim() %>
+                  </pre>
+                  <!-- Scroll indicator -->
+                  <div
+                    class="absolute top-0 right-0 h-full w-1 bg-dark-600 rounded-full"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Post Footer -->
+              <div
+                class="p-3 border-t border-dark-600 bg-dark-800 bg-opacity-50"
+              >
+                <div class="flex items-center justify-between">
+                  <button
+                    onclick="likePost('<%= post._id %>')"
+                    class="like-btn flex items-center space-x-1 <%= post.likes.indexOf(user._id) === -1 ? 'text-gray-400 hover:text-red-400' : 'text-red-400 liked' %> transition-colors"
+                  >
+                    <i class="fas fa-heart"></i>
+                    <span class="text-xs"><%= post.likes.length %></span>
+                  </button>
+
+                  <div class="flex items-center text-gray-500 text-xs">
+                    <i class="far fa-clock mr-1"></i>
+                    <%= new Date(post.date).toLocaleTimeString([], {hour:
+                    '2-digit', minute:'2-digit'}) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+          <% } %>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="w-full bg-dark-800 p-3 sm:p-4 mt-6 sm:mt-8 border-t border-dark-700"
+    >
+      <div
+        class="container mx-auto text-center text-gray-400 text-xs sm:text-sm"
+      >
+        © 2023 ShadowXHub. All rights reserved.
+      </div>
+    </footer>
+    <script>
+      function likePost(postId) {
+        fetch(`/like/${postId}`)
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data.message);
+            location.reload();
+          });
+      }
+
+      // Update character count
+      function updateCharCount() {
+        const content = document.getElementById("content");
+        const charCount = document.getElementById("charCount");
+        charCount.textContent = `${content.value.length}/500`;
+
+        // Change color when approaching limit
+        if (content.value.length > 450) {
+          charCount.classList.remove("text-gray-500");
+          charCount.classList.add("text-yellow-400");
+        } else if (content.value.length > 490) {
+          charCount.classList.remove("text-yellow-400");
+          charCount.classList.add("text-red-400");
+        } else {
+          charCount.classList.remove("text-yellow-400", "text-red-400");
+          charCount.classList.add("text-gray-500");
+        }
+      }
+
+      // Validate post before submission
+      function validatePost() {
+        const content = document.getElementById("content");
+        const errorElement = document.getElementById("postError");
+
+        // Clear previous errors
+        errorElement.classList.add("hidden");
+        errorElement.textContent = "";
+
+        // Trim whitespace
+        const trimmedContent = content.value.trim();
+
+        // Check if empty
+        if (trimmedContent.length === 0) {
+          errorElement.textContent = "Post content cannot be empty";
+          errorElement.classList.remove("hidden");
+          return false;
+        }
+
+        // Check minimum length (optional)
+        if (trimmedContent.length < 5) {
+          errorElement.textContent = "Post is too short (minimum 5 characters)";
+          errorElement.classList.remove("hidden");
+          return false;
+        }
+
+        // Check maximum length (already handled by maxlength attribute but good to double-check)
+        if (trimmedContent.length > 500) {
+          errorElement.textContent =
+            "Post exceeds maximum length of 500 characters";
+          errorElement.classList.remove("hidden");
+          return false;
+        }
+
+        // Check for excessive whitespace
+        if (
+          trimmedContent.split(/\s+/).length < 2 &&
+          trimmedContent.length > 20
+        ) {
+          errorElement.textContent = "Post contains too much whitespace";
+          errorElement.classList.remove("hidden");
+          return false;
+        }
+
+        // If all validations pass
+        return true;
+      }
+
+      // Initialize character count on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        updateCharCount();
+      });
+    </script>
+  </body>
+</html>

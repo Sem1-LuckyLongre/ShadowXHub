@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>Create Account | SocialHub</title>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                500: "#6366f1",
+                600: "#4f46e5",
+              },
+              dark: {
+                800: "#1e293b",
+                900: "#0f172a",
+              },
+              danger: {
+                500: "#ef4444",
+                600: "#dc2626",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .input-field:focus-within {
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+      }
+
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .error-message {
+        display: none;
+        color: #ef4444;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+      }
+
+      .input-error {
+        border-color: #ef4444 !important;
+      }
+
+      .input-error:focus-within {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3) !important;
+        border-color: #ef4444 !important;
+      }
+    </style>
+  </head>
+
+  <body class="bg-dark-900 text-gray-100">
+    <div class="min-h-screen flex items-center justify-center p-4">
+      <div class="w-full max-w-md">
+        <!-- Decorative elements - Hidden on small screens -->
+        <div class="flex justify-center mb-4 md:mb-6">
+          <div class="relative">
+            <div
+              class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-primary-500 opacity-20 animate-float"
+            ></div>
+            <div
+              class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-primary-500 opacity-20 animate-float absolute -top-2 -left-2 animation-delay-2000"
+            ></div>
+          </div>
+        </div>
+
+        <div
+          class="bg-dark-800 p-6 sm:p-8 rounded-2xl shadow-xl border border-dark-700"
+        >
+          <div class="text-center mb-6 md:mb-8">
+            <h1
+              class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary-500 to-blue-400 bg-clip-text text-transparent mb-2"
+            >
+              Join Our Community
+            </h1>
+            <p class="text-sm sm:text-base text-gray-400">
+              Create your account and start your journey
+            </p>
+          </div>
+
+          <form
+            id="registerForm"
+            action="/register"
+            method="POST"
+            class="space-y-4 sm:space-y-5"
+            novalidate
+          >
+            <div class="space-y-1">
+              <label
+                for="username"
+                class="text-xs sm:text-sm font-medium text-gray-300 flex items-center"
+              >
+                <i
+                  class="fas fa-user mr-2 text-primary-500 text-sm sm:text-base"
+                ></i>
+                Username
+              </label>
+              <div
+                class="input-field flex items-center bg-dark-700 rounded-lg px-3 border border-dark-600 focus-within:border-primary-500 transition-all"
+                id="username-container"
+              >
+                <i
+                  class="fas fa-user text-gray-500 mr-2 text-sm sm:text-base"
+                ></i>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  class="w-full py-2 sm:py-3 bg-transparent focus:outline-none text-gray-100 placeholder-gray-500 text-sm sm:text-base"
+                  placeholder="coolusername"
+                  required
+                  minlength="3"
+                  maxlength="20"
+                  pattern="^[a-zA-Z0-9_]+$"
+                />
+                <button
+                  type="button"
+                  class="text-gray-500 hover:text-gray-300 ml-2"
+                  onclick="togglePassword('username')"
+                >
+                  <i class="fas fa-eye text-sm sm:text-base"></i>
+                </button>
+              </div>
+              <div id="username-error" class="error-message text-xs sm:text-sm">
+                Username must be 3-20 characters long and contain only letters,
+                numbers, and underscores.
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label
+                for="name"
+                class="text-xs sm:text-sm font-medium text-gray-300 flex items-center"
+              >
+                <i
+                  class="fas fa-id-card mr-2 text-primary-500 text-sm sm:text-base"
+                ></i>
+                Full Name
+              </label>
+              <div
+                class="input-field flex items-center bg-dark-700 rounded-lg px-3 border border-dark-600 focus-within:border-primary-500 transition-all"
+                id="name-container"
+              >
+                <i
+                  class="fas fa-user-tag text-gray-500 mr-2 text-sm sm:text-base"
+                ></i>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="w-full py-2 sm:py-3 bg-transparent focus:outline-none text-gray-100 placeholder-gray-500 text-sm sm:text-base"
+                  placeholder="John Doe"
+                  required
+                  minlength="2"
+                  maxlength="50"
+                />
+              </div>
+              <div id="name-error" class="error-message text-xs sm:text-sm">
+                Please enter your full name (2-50 characters).
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label
+                for="email"
+                class="text-xs sm:text-sm font-medium text-gray-300 flex items-center"
+              >
+                <i
+                  class="fas fa-envelope mr-2 text-primary-500 text-sm sm:text-base"
+                ></i>
+                Email
+              </label>
+              <div
+                class="input-field flex items-center bg-dark-700 rounded-lg px-3 border border-dark-600 focus-within:border-primary-500 transition-all"
+                id="email-container"
+              >
+                <i
+                  class="fas fa-at text-gray-500 mr-2 text-sm sm:text-base"
+                ></i>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="w-full py-2 sm:py-3 bg-transparent focus:outline-none text-gray-100 placeholder-gray-500 text-sm sm:text-base"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
+              <div id="email-error" class="error-message text-xs sm:text-sm">
+                Please enter a valid email address.
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label
+                for="password"
+                class="text-xs sm:text-sm font-medium text-gray-300 flex items-center"
+              >
+                <i
+                  class="fas fa-lock mr-2 text-primary-500 text-sm sm:text-base"
+                ></i>
+                Password
+              </label>
+              <div
+                class="input-field flex items-center bg-dark-700 rounded-lg px-3 border border-dark-600 focus-within:border-primary-500 transition-all"
+                id="password-container"
+              >
+                <i
+                  class="fas fa-key text-gray-500 mr-2 text-sm sm:text-base"
+                ></i>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="w-full py-2 sm:py-3 bg-transparent focus:outline-none text-gray-100 placeholder-gray-500 text-sm sm:text-base"
+                  placeholder="••••••••"
+                  required
+                  minlength="8"
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                />
+                <button
+                  type="button"
+                  class="text-gray-500 hover:text-gray-300 ml-2"
+                  onclick="togglePassword('password')"
+                >
+                  <i class="fas fa-eye text-sm sm:text-base"></i>
+                </button>
+              </div>
+              <div id="password-error" class="error-message text-xs sm:text-sm">
+                Password must be at least 8 characters long and contain at least
+                one uppercase letter, one lowercase letter, one number, and one
+                special character.
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label
+                for="age"
+                class="text-xs sm:text-sm font-medium text-gray-300 flex items-center"
+              >
+                <i
+                  class="fas fa-birthday-cake mr-2 text-primary-500 text-sm sm:text-base"
+                ></i>
+                Age
+              </label>
+              <div
+                class="input-field flex items-center bg-dark-700 rounded-lg px-3 border border-dark-600 focus-within:border-primary-500 transition-all"
+                id="age-container"
+              >
+                <i
+                  class="fas fa-calendar-alt text-gray-500 mr-2 text-sm sm:text-base"
+                ></i>
+                <input
+                  type="number"
+                  id="age"
+                  name="age"
+                  class="w-full py-2 sm:py-3 bg-transparent focus:outline-none text-gray-100 placeholder-gray-500 text-sm sm:text-base"
+                  placeholder="25"
+                  required
+                  min="13"
+                  max="120"
+                />
+              </div>
+              <div id="age-error" class="error-message text-xs sm:text-sm">
+                You must be at least 13 years old to register.
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-medium py-2 sm:py-3 rounded-lg transition-all duration-300 flex items-center justify-center text-sm sm:text-base"
+            >
+              <i class="fas fa-user-plus mr-2"></i> Create Account
+            </button>
+          </form>
+
+          <div
+            class="mt-4 sm:mt-6 text-center text-xs sm:text-sm text-gray-400"
+          >
+            Already have an account?
+            <a
+              href="/login"
+              class="text-primary-500 hover:text-primary-400 font-medium transition-colors ml-1"
+            >
+              Sign in here
+              <i class="fas fa-arrow-right ml-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-6 sm:mt-8 text-center text-xs text-gray-500">
+          <p>
+            By creating an account, you agree to our
+            <a href="#" class="text-primary-500 hover:underline">Terms</a> and
+            <a href="#" class="text-primary-500 hover:underline"
+              >Privacy Policy</a
+            >.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function togglePassword(id) {
+        const input = document.getElementById(id);
+        const icon = input.nextElementSibling.querySelector("i");
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+          input.type = "password";
+          icon.classList.replace("fa-eye-slash", "fa-eye");
+        }
+      }
+
+      // Form validation
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("registerForm");
+
+        // Add event listeners for real-time validation
+        const fields = ["username", "name", "email", "password", "age"];
+        fields.forEach((field) => {
+          const input = document.getElementById(field);
+          const container = document.getElementById(`${field}-container`);
+          const error = document.getElementById(`${field}-error`);
+
+          input.addEventListener("input", () =>
+            validateField(input, container, error)
+          );
+          input.addEventListener("blur", () =>
+            validateField(input, container, error)
+          );
+        });
+
+        // Form submission validation
+        form.addEventListener("submit", function (e) {
+          let isValid = true;
+
+          // Validate all fields
+          fields.forEach((field) => {
+            const input = document.getElementById(field);
+            const container = document.getElementById(`${field}-container`);
+            const error = document.getElementById(`${field}-error`);
+
+            if (!validateField(input, container, error)) {
+              isValid = false;
+            }
+          });
+
+          if (!isValid) {
+            e.preventDefault();
+            // Scroll to the first error
+            const firstError = document.querySelector(".input-error");
+            if (firstError) {
+              firstError.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            }
+          }
+        });
+
+        // Field validation function
+        function validateField(input, container, errorElement) {
+          let isValid = true;
+
+          // Reset error state
+          container.classList.remove("input-error");
+          errorElement.style.display = "none";
+
+          // Check required fields
+          if (input.required && !input.value.trim()) {
+            showError(container, errorElement, "This field is required");
+            isValid = false;
+          }
+
+          // Field-specific validation
+          if (isValid && input.value.trim()) {
+            switch (input.id) {
+              case "username":
+                if (!/^[a-zA-Z0-9_]{3,20}$/.test(input.value)) {
+                  showError(
+                    container,
+                    errorElement,
+                    "Username must be 3-20 characters (letters, numbers, underscores)"
+                  );
+                  isValid = false;
+                }
+                break;
+              case "name":
+                if (input.value.length < 2 || input.value.length > 50) {
+                  showError(
+                    container,
+                    errorElement,
+                    "Name must be 2-50 characters"
+                  );
+                  isValid = false;
+                }
+                break;
+              case "email":
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+                  showError(
+                    container,
+                    errorElement,
+                    "Please enter a valid email"
+                  );
+                  isValid = false;
+                }
+                break;
+              case "password":
+                if (
+                  !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+                    input.value
+                  )
+                ) {
+                  showError(
+                    container,
+                    errorElement,
+                    "Password must contain uppercase, lowercase, number, and special character"
+                  );
+                  isValid = false;
+                }
+                break;
+              case "age":
+                const age = parseInt(input.value);
+                if (isNaN(age)) {
+                  showError(
+                    container,
+                    errorElement,
+                    "Please enter a valid age"
+                  );
+                  isValid = false;
+                } else if (age < 13) {
+                  showError(
+                    container,
+                    errorElement,
+                    "You must be at least 13 years old"
+                  );
+                  isValid = false;
+                } else if (age > 120) {
+                  showError(
+                    container,
+                    errorElement,
+                    "Please enter a valid age"
+                  );
+                  isValid = false;
+                }
+                break;
+            }
+          }
+
+          return isValid;
+        }
+
+        function showError(container, errorElement, message) {
+          container.classList.add("input-error");
+          errorElement.textContent = message;
+          errorElement.style.display = "block";
+        }
+      });
+    </script>
+  </body>
+</html>

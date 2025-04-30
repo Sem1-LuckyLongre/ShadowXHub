@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>Global Posts | ShadowXHub</title>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                500: "#6366f1",
+                600: "#4f46e5",
+              },
+              dark: {
+                700: "#1e293b",
+                800: "#1e293b",
+                900: "#0f172a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .input-field:focus-within {
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+      }
+
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+
+      .post-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .post-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      }
+      .post-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .post-author {
+        position: relative;
+        display: inline-block;
+      }
+
+      .post-author:after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #6366f1, #4f46e5);
+        transition: width 0.3s ease;
+      }
+
+      .post-author:hover:after {
+        width: 100%;
+      }
+
+      .like-btn {
+        transition: all 0.2s ease;
+      }
+
+      .like-btn:hover {
+        transform: scale(1.1);
+      }
+
+      .like-btn.liked {
+        animation: heartBeat 0.5s;
+      }
+
+      @keyframes heartBeat {
+        0% {
+          transform: scale(1);
+        }
+        25% {
+          transform: scale(1.2);
+        }
+        50% {
+          transform: scale(1);
+        }
+        75% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .post-content {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .post-content:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 20px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(30, 41, 59, 0.8)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .post-card:hover .post-content:after {
+        opacity: 1;
+      }
+      .post-content {
+        scrollbar-width: thin;
+        scrollbar-color: #4f46e5 #1e293b;
+      }
+
+      .post-content::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .post-content::-webkit-scrollbar-track {
+        background: #1e293b;
+        border-radius: 10px;
+      }
+
+      .post-content::-webkit-scrollbar-thumb {
+        background-color: #4f46e5;
+        border-radius: 10px;
+      }
+
+      .post-content:hover::-webkit-scrollbar-thumb {
+        background-color: #6366f1;
+      }
+
+      .scroll-thumb {
+        height: 30%;
+        transition: height 0.2s ease, background-color 0.2s ease;
+      }
+
+      .post-content:hover .scroll-thumb {
+        background-color: #6366f1;
+      }
+
+      pre {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+
+  <body class="bg-dark-900 text-gray-100 min-h-screen">
+    <!-- Header Section -->
+    <header
+      class="w-full bg-dark-800 p-3 sm:p-4 shadow-md border-b border-dark-700"
+    >
+      <div
+        class="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0"
+      >
+        <div class="flex items-center space-x-2 sm:space-x-4">
+          <div
+            class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-primary-500 to-blue-400 flex items-center justify-center"
+          >
+            <span class="font-bold text-white text-sm sm:text-base">
+              <%= user.name.charAt(0).toUpperCase() %>
+            </span>
+          </div>
+          <h1
+            class="text-lg sm:text-xl font-bold bg-gradient-to-r from-primary-500 to-blue-400 bg-clip-text text-transparent"
+          >
+            <%= user.name %>
+          </h1>
+        </div>
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <a
+            href="/profile"
+            class="text-blue-400 hover:text-blue-300 font-medium flex items-center text-sm sm:text-base"
+          >
+            <i class="fas fa-user mr-1 sm:mr-2"></i>
+            <span class="hidden sm:inline">My</span> Profile
+          </a>
+          <a
+            href="/logout"
+            class="text-red-400 hover:text-red-300 font-medium flex items-center text-sm sm:text-base"
+          >
+            <i class="fas fa-sign-out-alt mr-1 sm:mr-2"></i>
+            <span class="hidden sm:inline">Logout</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto py-4 sm:py-8 px-3 sm:px-4">
+      <!-- Posts Section -->
+      <section
+        class="bg-dark-800 p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg border border-dark-700"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl sm:text-2xl font-bold flex items-center">
+            <i
+              class="fas fa-globe-americas text-primary-500 mr-3 animate-spin"
+              style="animation-duration: 20s"
+            ></i>
+            <span
+              class="bg-gradient-to-r from-primary-500 to-blue-400 bg-clip-text text-transparent"
+            >
+              Community Posts
+            </span>
+          </h2>
+          <div class="flex items-center space-x-4">
+            <a
+              href="/profile"
+              class="flex items-center text-sm text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              <i class="fas fa-user-circle mr-2"></i>
+              My Profile
+            </a>
+          </div>
+        </div>
+
+        <% if (allPosts.length===0) { %>
+        <div class="text-center py-12">
+          <div class="inline-block p-6 bg-dark-700 rounded-full mb-4">
+            <i class="fas fa-comments text-4xl text-gray-500"></i>
+          </div>
+          <h3 class="text-lg font-medium text-gray-300 mb-2">No Posts Yet</h3>
+          <p class="text-gray-500 max-w-md mx-auto">
+            The community is quiet right now. Be the first to break the silence!
+          </p>
+          <a
+            href="/profile"
+            class="mt-4 inline-block px-4 py-2 bg-primary-500 hover:bg-primary-600 rounded-md text-sm font-medium transition-colors"
+          >
+            Create Your First Post
+          </a>
+        </div>
+        <% } else { %>
+        <!-- New Grid Layout -->
+        <div class="post-grid">
+          <% allPosts.reverse().forEach((post)=> { %>
+          <div
+            class="post-card bg-dark-700 rounded-lg border border-dark-600 hover:border-primary-500 transition-all overflow-hidden"
+          >
+            <!-- Post Header -->
+            <div
+              class="p-4 border-b border-dark-600 flex items-center justify-between"
+            >
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-8 h-8 rounded-full bg-gradient-to-r from-primary-500 to-blue-400 flex items-center justify-center"
+                >
+                  <span class="font-bold text-white text-sm">
+                    <%= post.user.username.charAt(0).toUpperCase() %>
+                  </span>
+                </div>
+                <div>
+                  <h3
+                    class="post-author text-sm font-medium text-primary-400 cursor-pointer"
+                  >
+                    @<%= post.user.username %>
+                  </h3>
+                  <p class="text-xs text-gray-500">
+                    <%= new Date(post.date).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric'
+                    }) %>
+                    
+                  </p>
+                </div>
+              </div>
+              <% if (post.user._id.equals(user._id)) { %>
+              <div class="flex space-x-2">
+                <a
+                  href="/edit/<%= post._id %>"
+                  class="text-gray-500 hover:text-yellow-400 transition-colors"
+                >
+                  <i class="fas fa-pencil-alt text-xs"></i>
+                </a>
+                <a
+                  href="/delete/<%= post._id %>"
+                  class="text-gray-500 hover:text-red-400 transition-colors"
+                >
+                  <i class="fas fa-trash-alt text-xs"></i>
+                </a>
+              </div>
+              <% } %>
+            </div>
+
+            <!-- Post Content -->
+            <div class="post-content p-4 max-h-40 overflow-y-auto">
+              <div class="relative">
+                <pre
+                  class="text-gray-300 text-sm whitespace-pre-wrap font-sans leading-relaxed pr-2"
+                ><%= post.content.trim() %>
+                </pre>
+                <!-- Scroll indicator -->
+                <div
+                  class="absolute top-0 right-0 h-full w-1 bg-dark-600 rounded-full"
+                ></div>
+              </div>
+            </div>
+            <!-- Post Footer -->
+            <div class="p-3 border-t border-dark-600 bg-dark-800 bg-opacity-50">
+              <div class="flex items-center justify-between">
+                <button
+                  onclick="likePost('<%= post._id %>')"
+                  class="like-btn flex items-center space-x-1 <%= post.likes.indexOf(user._id) === -1 ? 'text-gray-400 hover:text-red-400' : 'text-red-400 liked' %> transition-colors"
+                >
+                  <i class="fas fa-heart"></i>
+                  <span class="text-xs"><%= post.likes.length %></span>
+                </button>
+
+                <div class="flex items-center text-gray-500 text-xs">
+                  <i class="far fa-clock mr-1"></i>
+                  <%= new Date(post.date).toLocaleTimeString([], {hour:
+                  '2-digit', minute:'2-digit'}) %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+        <% } %>
+      </section>
+    </main>
+    <a
+      href="/profile"
+      class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary-500 hover:bg-primary-600 shadow-lg flex items-center justify-center text-white transition-all hover:rotate-90"
+    >
+      <i class="fas fa-plus text-xl"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer
+      class="w-full bg-dark-800 p-3 sm:p-4 mt-6 sm:mt-8 border-t border-dark-700"
+    >
+      <div
+        class="container mx-auto text-center text-gray-400 text-xs sm:text-sm"
+      >
+        © 2023 ShadowXHub. All rights reserved.
+      </div>
+    </footer>
+
+    <script>
+      function likePost(postId) {
+        const btn = event.currentTarget;
+        btn.classList.add("liked");
+
+        fetch(`/like/${postId}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              const likeCount = btn.querySelector("span");
+              if (btn.classList.contains("text-red-400")) {
+                // Already liked, now unliking
+                btn.classList.remove("text-red-400");
+                btn.classList.add("text-gray-400", "hover:text-red-400");
+                likeCount.textContent = parseInt(likeCount.textContent) - 1;
+              } else {
+                // Liking
+                btn.classList.remove("text-gray-400", "hover:text-red-400");
+                btn.classList.add("text-red-400");
+                likeCount.textContent = parseInt(likeCount.textContent) + 1;
+              }
+            }
+          })
+          .finally(() => {
+            setTimeout(() => btn.classList.remove("liked"), 500);
+          });
+      }
+      document.querySelectorAll(".post-content").forEach((el) => {
+        el.addEventListener("scroll", function () {
+          const thumb = this.querySelector(".scroll-thumb");
+          const scrollPercentage =
+            this.scrollTop / (this.scrollHeight - this.clientHeight);
+          const thumbHeight = Math.max(
+            20,
+            this.clientHeight * (this.clientHeight / this.scrollHeight)
+          );
+
+          thumb.style.height = `${thumbHeight}px`;
+          thumb.style.top = `${
+            scrollPercentage * (this.clientHeight - thumbHeight)
+          }px`;
+        });
+      });
+    </script>
+  </body>
+</html>

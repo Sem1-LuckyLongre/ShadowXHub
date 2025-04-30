@@ -1,0 +1,35 @@
+# Node.js
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Environment Files
+.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Build output
+/dist
+/build
+
+# IDEs and Editors
+.vscode/
+.idea/
+
+# Optional: If you are using a package manager like Yarn
+.yarn-debug.log*
+.yarn-error.log*
+
+# Optional: If you are using a testing framework like Mocha or Jest
+coverage/
+
+# Optional: If you are using PM2 for deployment
+.pmx
+
+# Optional: If you are using cache
+.cache/

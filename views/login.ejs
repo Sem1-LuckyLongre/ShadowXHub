@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>Login | SocialHub</title>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                500: "#6366f1",
+                600: "#4f46e5",
+              },
+              dark: {
+                800: "#1e293b",
+                900: "#0f172a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .input-field:focus-within {
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+      }
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      .animation-delay-2000 {
+        animation-delay: 2s;
+      }
+    </style>
+  </head>
+
+  <body class="bg-dark-900 text-gray-100">
+    <div class="min-h-screen flex items-center justify-center p-4 sm:p-6">
+      <div class="w-full max-w-md mx-auto">
+        <!-- Decorative elements - Hidden on small mobile -->
+        <div class="flex justify-center mb-4 sm:mb-6">
+          <div class="relative">
+            <div
+              class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary-500 opacity-20 animate-float"
+            ></div>
+            <div
+              class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary-500 opacity-20 animate-float absolute -top-1 -left-1 sm:-top-2 sm:-left-2 animation-delay-2000"
+            ></div>
+          </div>
+        </div>
+
+        <div
+          class="bg-dark-800 p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-xl border border-dark-700"
+        >
+          <div class="text-center mb-6 sm:mb-8">
+            <h1
+              class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary-500 to-blue-400 bg-clip-text text-transparent mb-1 sm:mb-2"
+            >
+              Welcome Back
+            </h1>
+            <p class="text-sm sm:text-base text-gray-400">
+              Sign in to continue your journey
+            </p>
+          </div>
+
+          <form action="/login" method="POST" class="space-y-4 sm:space-y-5">
+            <div class="space-y-1">
+              <label
+                for="email"
+                class="text-xs sm:text-sm font-medium text-gray-300 flex items-center"
+              >
+                <i
+                  class="fas fa-envelope mr-2 text-primary-500 text-sm sm:text-base"
+                ></i>
+                Email
+              </label>
+              <div
+                class="input-field flex items-center bg-dark-700 rounded-lg px-3 border border-dark-600 focus-within:border-primary-500 transition-all"
+              >
+                <i
+                  class="fas fa-at text-gray-500 mr-2 text-sm sm:text-base"
+                ></i>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="w-full py-2 sm:py-3 bg-transparent focus:outline-none text-gray-100 placeholder-gray-500 text-sm sm:text-base"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label
+                for="password"
+                class="text-xs sm:text-sm font-medium text-gray-300 flex items-center"
+              >
+                <i
+                  class="fas fa-lock mr-2 text-primary-500 text-sm sm:text-base"
+                ></i>
+                Password
+              </label>
+              <div
+                class="input-field flex items-center bg-dark-700 rounded-lg px-3 border border-dark-600 focus-within:border-primary-500 transition-all"
+              >
+                <i
+                  class="fas fa-key text-gray-500 mr-2 text-sm sm:text-base"
+                ></i>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="w-full py-2 sm:py-3 bg-transparent focus:outline-none text-gray-100 placeholder-gray-500 text-sm sm:text-base"
+                  placeholder="••••••••"
+                  required
+                />
+                <button
+                  type="button"
+                  class="text-gray-500 hover:text-gray-300 text-sm sm:text-base"
+                  onclick="togglePassword('password')"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <div class="flex justify-end">
+                <a
+                  href="/#"
+                  class="text-xs text-primary-500 hover:text-primary-400 hover:underline"
+                  >Forgot password?</a
+                >
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-medium py-2 sm:py-3 rounded-lg transition-all duration-300 flex items-center justify-center text-sm sm:text-base"
+            >
+              <i class="fas fa-sign-in-alt mr-2"></i> Sign In
+            </button>
+
+            <div class="relative my-4 sm:my-6">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-dark-600"></div>
+              </div>
+              <div class="relative flex justify-center text-xs sm:text-sm">
+                <span class="px-2 bg-dark-800 text-gray-400"
+                  >Or continue with</span
+                >
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 sm:gap-3">
+              <button
+                type="button"
+                class="flex items-center justify-center py-2 sm:py-2.5 px-3 sm:px-4 rounded-lg bg-dark-700 hover:bg-dark-600 border border-dark-600 transition-colors text-xs sm:text-sm"
+              >
+                <i class="fab fa-google text-red-500 mr-2"></i>
+                <span class="font-medium">Google</span>
+              </button>
+              <button
+                type="button"
+                class="flex items-center justify-center py-2 sm:py-2.5 px-3 sm:px-4 rounded-lg bg-dark-700 hover:bg-dark-600 border border-dark-600 transition-colors text-xs sm:text-sm"
+              >
+                <i class="fab fa-github text-gray-300 mr-2"></i>
+                <span class="font-medium">GitHub</span>
+              </button>
+            </div>
+          </form>
+
+          <div
+            class="mt-4 sm:mt-6 text-center text-xs sm:text-sm text-gray-400"
+          >
+            Don't have an account?
+            <a
+              href="/"
+              class="text-primary-500 hover:text-primary-400 font-medium transition-colors ml-1"
+            >
+              Register now
+              <i class="fas fa-arrow-right ml-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-6 sm:mt-8 text-center text-xs text-gray-500">
+          <p>
+            By signing in, you agree to our
+            <a href="#" class="text-primary-500 hover:underline">Terms</a> and
+            <a href="#" class="text-primary-500 hover:underline"
+              >Privacy Policy</a
+            >.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function togglePassword(id) {
+        const input = document.getElementById(id);
+        const icon = input.nextElementSibling.querySelector("i");
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+          input.type = "password";
+          icon.classList.replace("fa-eye-slash", "fa-eye");
+        }
+      }
+    </script>
+  </body>
+</html>
