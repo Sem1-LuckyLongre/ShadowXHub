@@ -337,8 +337,12 @@
 
                 <div class="flex items-center text-gray-500 text-xs">
                   <i class="far fa-clock mr-1"></i>
-                  <%= new Date(post.date).toLocaleTimeString([], {hour:
-                  '2-digit', minute:'2-digit'}) %>
+                  <%= new Date(post.date).toLocaleTimeString([], { 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    timeZoneName: 'short' 
+                }) %>
+                
                 </div>
               </div>
             </div>
