@@ -25,7 +25,7 @@ app.use("/", userRoutes);
 
 db().then(() => {
   console.log("Connected to MongoDB");
-  app.listen(3000, () => {
+  app.listen(process.env.PORT || 3000, () => {
     console.log("Server started on http://localhost:3000");
   });
 });
