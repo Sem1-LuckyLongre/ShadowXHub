@@ -302,9 +302,10 @@
                       @<%= user.username %>
                     </h3>
                     <p class="text-xs text-gray-500">
-                      <%= new Date(new Date(post.date).getTime() + (5.5 * 60 *
-                      60 * 1000)).toLocaleTimeString([], { hour: '2-digit',
-                      minute: '2-digit' }) %>
+                      <%= new Date(new Date(post.date).getTime() + (5.5 * 60 * 60 * 1000)).toLocaleTimeString([], { 
+                        hour: '2-digit', 
+                        minute: '2-digit'
+                    }) %>
                     </p>
                   </div>
                 </div>
