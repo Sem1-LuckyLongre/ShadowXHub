@@ -302,8 +302,9 @@
                       @<%= user.username %>
                     </h3>
                     <p class="text-xs text-gray-500">
-                      <%= new Date(post.date).toLocaleDateString('en-US', {
-                      month: 'short', day: 'numeric', year: 'numeric' }) %>
+                      <%= new Date(new Date(post.date).getTime() + (5.5 * 60 *
+                      60 * 1000)).toLocaleDateString('en-US', { month: 'short',
+                      day: 'numeric', year: 'numeric' }) %>
                     </p>
                   </div>
                 </div>
